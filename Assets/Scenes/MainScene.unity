@@ -633,7 +633,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a42239313eb67949aa514fe27f81089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  min: 1
-  max: 8
+  minX: 1
+  maxX: 8
+  minY: 3
+  maxY: 8
+  maxMushroom: 7
   objectToSpawn: {fileID: 8360788079540564263, guid: 05713fe23ee6c38489dbb41cdedb489b,
     type: 3}
