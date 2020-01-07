@@ -16,7 +16,7 @@ public class Mushroom : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         // Hit by a bullet will decrease the health point of mushroom
         if (col.gameObject.CompareTag("Bullet"))
