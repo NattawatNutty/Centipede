@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7716490018900332516}
   - component: {fileID: 1607218211722226517}
   - component: {fileID: 7072075186124879014}
+  - component: {fileID: -851098298044876336}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8360788079540564263}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.503, y: 1.477, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.715, y: 0.715, z: 0.715}
   m_Children: []
   m_Father: {fileID: 0}
@@ -92,8 +93,8 @@ BoxCollider2D:
   m_GameObject: {fileID: 8360788079540564263}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_Material: {fileID: 6200000, guid: b71cac4e00fd1704a914dc665ff566bc, type: 2}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -107,5 +108,18 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.38, y: 1.38}
+  m_Size: {x: 1.3, y: 1.3}
   m_EdgeRadius: 0
+--- !u!114 &-851098298044876336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8360788079540564263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61d603fd4792834b95716f539c8a1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mushroomLife: 3
