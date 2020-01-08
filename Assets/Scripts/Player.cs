@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Grid
-    public int numGrid = 30;                    // Grid dimension
-    public GameObject cam;                      // Main camera object
-    public GameObject bg;                       // Background
-    private int gridWithPadding;                 // Grid with padding each side
-    private float limitRatio = 0.15f;           // The height limit the player can move up to from the top
-
-    // Mushroom generation
-    public int maxMushroom = 30;                // Max number of mushrooms
-    public GameObject objectToSpawn;            // Mushroom prefab to spawn
-
     // Player properties
     public bool movable = true;                 // Decide whether the player can move against that direction
     public float bulletSpeed = 5f;              // Speed that a bullet can travel in cells per second
@@ -28,19 +17,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gridWithPadding = numGrid + 2;
-        // Change the position of the camera and background by the grid dimension
-        float newPos = numGrid / 2f + 0.5f;
-        bg.transform.position = new Vector3(newPos, newPos, 1f);
-        cam.transform.position = new Vector3(newPos, newPos, -10f);
-        // Resize the background by the grid dimension
-        bg.transform.localScale = new Vector3(gridWithPadding / 10f, gridWithPadding / 10f, gridWithPadding / 10f);
-        // Resize the camera by the grid dimension with padding 1 unit each size
-        Camera camComponent = cam.GetComponent<Camera>();
-        camComponent.orthographicSize = gridWithPadding / 2f;
         // Get Rigidbody2D of the player
         rb = GetComponent<Rigidbody2D>();
-        MushroomGen();
     }
 
     // Update is called once per frame
@@ -62,20 +40,6 @@ public class Player : MonoBehaviour
             }
         }
         CheckGameOver();
-    }
-
-    // Generate the mushrooms in random positions
-    void MushroomGen()
-    {
-        int count = 0;
-        while (count < maxMushroom)
-        {
-            int x = Random.Range(0, numGrid);
-            // Leave 2 bottom rows for space to shoot
-            int y = Random.Range(2, numGrid);
-            Instantiate(objectToSpawn, new Vector3(x, y, 0), Quaternion.identity);
-            count++;
-        }
     }
 
     // Movement control function
