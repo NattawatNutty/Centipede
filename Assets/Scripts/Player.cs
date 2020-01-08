@@ -5,14 +5,18 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Player properties
-    public bool movable = true;                 // Decide whether the player can move against that direction
-    public float bulletSpeed = 5f;              // Speed that a bullet can travel in cells per second
-    public float fireRate = 0.25f;              // Fire rate for the bullet in seconds
     public int lives = 3;                       // Lives given for the player
-    public GameObject bulletPrefab;             // Prefab of a bullet
-
-    private float nextFire;                     // Time the next bullet can be fired
+    public float playerSpeed = 5f;              // Speed of the player in cells per second
+    private float limitRatio = 0.85f;           // The height limit the player can move up from the bottom
+    private float nextMove = 0;                 // Time the player can move to the next cell
     private Rigidbody2D rb;                     // Rigidbody of the player object
+    private Vector3 direction;
+
+    // Gun properties
+    public float bulletSpeed = 10f;             // Speed that a bullet can travel in cells per second
+    public float fireRate = 0.25f;              // Fire rate for the bullet in seconds
+    public GameObject bulletPrefab;             // Prefab of a bullet
+    private float nextFire;                     // Time the next bullet can be fired
 
     // Start is called before the first frame update
     void Start()
@@ -45,29 +49,46 @@ public class Player : MonoBehaviour
     // Movement control function
     void Movement()
     {
-        if (CheckMovable(Vector3.up) && Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
+        // Move up
+        if (CheckMovable(Vector3.up) && Input.GetButton("Vertical") && Input.GetAxisRaw("Vertical") > 0)
         {
-            rb.MovePosition(transform.position + Vector3.up);
+            direction = Vector3.up;
         }
-        else if (CheckMovable(Vector3.down) && Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") < 0)
+        // Move down
+        else if (CheckMovable(Vector3.down) && Input.GetButton("Vertical") && Input.GetAxisRaw("Vertical") < 0)
         {
-            rb.MovePosition(transform.position + Vector3.down);
+            direction = Vector3.down;
         }
-        else if (CheckMovable(Vector3.left) && Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") < 0)
+        // Move left
+        else if (CheckMovable(Vector3.left) && Input.GetButton("Horizontal") && Input.GetAxisRaw("Horizontal") < 0)
         {
-            rb.MovePosition(transform.position + Vector3.left);
+            direction = Vector3.left;
         }
-        else if (CheckMovable(Vector3.right) && Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0)
+        // Move right
+        else if (CheckMovable(Vector3.right) && Input.GetButton("Horizontal") && Input.GetAxisRaw("Horizontal") > 0)
         {
-            rb.MovePosition(transform.position + Vector3.right);
+            direction = Vector3.right;
+        }
+        else
+        {
+            direction = Vector3.zero;
+        }
+
+        // Move the centipede by the speed (units / s)
+        if (Time.time > nextMove)
+        {
+            nextMove = Time.time + 1f / playerSpeed;
+            rb.MovePosition(transform.position + direction);
         }
     }
 
+    // Check if the player can move to the selected direction
     bool CheckMovable(Vector3 direction)
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, 1);
         foreach (RaycastHit2D h in hits)
         {
+            // Ignore its collider
             if (!h.collider.gameObject.CompareTag("Player"))
             {
                 return false;

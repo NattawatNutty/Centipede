@@ -10,7 +10,10 @@ public class GridGeneration : MonoBehaviour
 
     // Mushroom generation
     public int maxMushroom = 30;                // Max number of mushrooms
-    public GameObject objectToSpawn;            // Mushroom prefab to spawn
+    public GameObject mushroomPrefab;            // Mushroom prefab to spawn
+
+    public int centipedeLength = 15;            // Number of the centipede length
+    public GameObject centipedePrefab;          // Centipede prefab
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +31,10 @@ public class GridGeneration : MonoBehaviour
         WallSettings(newPos, "Left", -verticalOffset, verticalSize);
         WallSettings(newPos, "Right", verticalOffset, verticalSize);
         MushroomGen();
+        CentipedeGen();
     }
 
+    // Translate the camera according to the dimension of grid
     void CameraSettings(float newPos)
     {
         transform.position = new Vector3(newPos, newPos, 1);
@@ -41,6 +46,7 @@ public class GridGeneration : MonoBehaviour
         camComponent.orthographicSize = numGrid / 2f;
     }
 
+    // Set up the walls
     void WallSettings(float newPos, string name, Vector2 offset, Vector2 size)
     {
         GameObject wall = GameObject.Find(name);
@@ -59,8 +65,20 @@ public class GridGeneration : MonoBehaviour
             int x = Random.Range(0, numGrid - 1);
             // Leave 2 bottom rows for space to shoot
             int y = Random.Range(2, numGrid - 1);
-            Instantiate(objectToSpawn, new Vector3(x, y, 0), Quaternion.identity);
+            Instantiate(mushroomPrefab, new Vector3(x, y, 0), Quaternion.identity);
             count++;
+        }
+    }
+
+    // Generate the centipede on grid
+    void CentipedeGen()
+    {
+        for (int i = 0; i < centipedeLength; i++)
+        {
+            Vector3 nextPos = new Vector3(i, numGrid - 1, 0);
+            GameObject nextCent = Instantiate(centipedePrefab, nextPos, Quaternion.identity);
+            nextCent.GetComponent<Centipede>().order = i;
+            nextCent.name = "Centipede " + i;
         }
     }
 }
