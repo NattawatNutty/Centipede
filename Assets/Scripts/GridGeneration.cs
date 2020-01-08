@@ -7,7 +7,6 @@ public class GridGeneration : MonoBehaviour
     // Grid
     public int numGrid = 30;                    // Grid dimension
     public GameObject cam;                      // Main camera object
-    private float limitRatio = 0.15f;           // The height limit the player can move up to from the top
 
     // Mushroom generation
     public int maxMushroom = 30;                // Max number of mushrooms
@@ -57,9 +56,9 @@ public class GridGeneration : MonoBehaviour
         int count = 0;
         while (count < maxMushroom)
         {
-            int x = Random.Range(1, numGrid);
+            int x = Random.Range(0, numGrid - 1);
             // Leave 2 bottom rows for space to shoot
-            int y = Random.Range(2, numGrid);
+            int y = Random.Range(2, numGrid - 1);
             Instantiate(objectToSpawn, new Vector3(x, y, 0), Quaternion.identity);
             count++;
         }
