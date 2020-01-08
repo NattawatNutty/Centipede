@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Destroy the bullet when it hits to reduce the memory
+    // Destroy the bullet whenever it hits something to reduce the memory
     void OnCollisionEnter2D(Collision2D col)
     {
         Destroy(gameObject);
