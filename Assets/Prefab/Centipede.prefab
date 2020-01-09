@@ -137,5 +137,6 @@ MonoBehaviour:
   isCollide: 0
   isDown: 0
   isRight: 0
-  centipedeSpeed: 5
+  order: 0
+  centipedeSpeed: 10
   direction: {x: 0, y: 0, z: 0}
